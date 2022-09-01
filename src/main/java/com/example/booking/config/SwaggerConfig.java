@@ -13,6 +13,12 @@ public class SwaggerConfig {
         return GroupedOpenApi.builder().group("company").pathsToMatch("/company/**").build();
     }
 
+
+    @Bean
+    GroupedOpenApi slot() {
+        return GroupedOpenApi.builder().group("slot").pathsToMatch("/slot/**").build();
+    }
+
     @Bean
     GroupedOpenApi test() {
         return GroupedOpenApi.builder().group("test").pathsToMatch("/test/**").build();

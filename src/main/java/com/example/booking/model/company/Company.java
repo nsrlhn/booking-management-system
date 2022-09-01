@@ -4,10 +4,7 @@ import com.example.booking.enums.Status;
 import com.example.booking.request.company.CompanyRequest;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,7 +12,7 @@ import java.math.BigDecimal;
 public class Company {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -32,6 +29,12 @@ public class Company {
 
     @Column(nullable = false)
     private Status status;
+
+    public static Company of(Long id) {
+        Company company = new Company();
+        company.setId(id);
+        return company;
+    }
 
     public <T extends CompanyRequest> void setFields(T request) {
         name = request.getName();
