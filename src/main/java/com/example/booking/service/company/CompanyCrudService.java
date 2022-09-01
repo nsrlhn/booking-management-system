@@ -1,8 +1,8 @@
 package com.example.booking.service.company;
 
 import com.example.booking.exception.company.CompanyNotFoundException;
-import com.example.booking.model.Company;
-import com.example.booking.repository.CompanyRepository;
+import com.example.booking.model.company.Company;
+import com.example.booking.repository.company.CompanyRepository;
 import com.example.booking.request.company.CompanySaveRequest;
 import com.example.booking.request.company.CompanyUpdateRequest;
 import lombok.RequiredArgsConstructor;

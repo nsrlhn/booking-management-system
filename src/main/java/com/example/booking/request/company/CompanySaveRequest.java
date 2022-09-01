@@ -9,6 +9,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class CompanySaveRequest extends CompanyRequest {
 
-    @Schema(example = "ACTIVE")
-    private Status status = Status.ACTIVE;
+    @Schema(example = "Active")
+    private Status status = Status.Active;
 }

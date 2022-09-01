@@ -1,4 +1,4 @@
-package com.example.booking.model;
+package com.example.booking.model.company;
 
 import com.example.booking.enums.Status;
 import com.example.booking.request.company.CompanyRequest;

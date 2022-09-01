@@ -12,6 +12,6 @@ import javax.validation.constraints.NotNull;
 public class CompanyUpdateRequest extends CompanyRequest {
 
     @NotNull
-    @Schema(example = "ACTIVE")
+    @Schema(example = "Active")
     private Status status;
 }

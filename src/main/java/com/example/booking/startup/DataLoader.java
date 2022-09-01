@@ -1,8 +1,8 @@
 package com.example.booking.startup;
 
 import com.example.booking.enums.Status;
-import com.example.booking.model.Company;
-import com.example.booking.repository.CompanyRepository;
+import com.example.booking.model.company.Company;
+import com.example.booking.repository.company.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -23,7 +23,7 @@ public class DataLoader {
         company.setPhone("5531312403");
         company.setLongitude(new BigDecimal("28.979530"));
         company.setLatitude(new BigDecimal("41.015137"));
-        company.setStatus(Status.ACTIVE);
+        company.setStatus(Status.Active);
 
         companyRepository.save(company);
     }
