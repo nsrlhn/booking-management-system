@@ -10,4 +10,6 @@ public interface SlotRepository extends CrudRepository<Slot, Long> {
     boolean existsByCompanyIdAndTimeStampInHours(Long companyId, Integer timeStampInHours);
 
     List<Slot> findByCustomerNameIsNullAndTimeStampInHours(Integer timeStampInHours);
+
+    boolean existsByCustomerNameIsNullAndCompanyIdAndTimeStampInHours(Long companyId, Integer timeStampInHours);
 }

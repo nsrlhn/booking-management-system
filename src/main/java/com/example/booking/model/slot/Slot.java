@@ -30,11 +30,15 @@ public class Slot {
     private String customerName;
 
     public static int convertToTimeStampInHours(LocalDate date, int hour) {
-        return (int) (Timestamp.valueOf(LocalDateTime.of(date, LocalTime.of(hour, 0))).getTime() / MILLIS_TO_HOUR);
+        return convertToTimeStampInHours(LocalDateTime.of(date, LocalTime.of(hour, 0)));
     }
 
     public static int now() {
         return (int) (System.currentTimeMillis() / MILLIS_TO_HOUR);
+    }
+
+    public static int convertToTimeStampInHours(LocalDateTime dateTime) {
+        return (int) (Timestamp.valueOf(dateTime).getTime() / MILLIS_TO_HOUR);
     }
 
     public boolean isBooked() {
