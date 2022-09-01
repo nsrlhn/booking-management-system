@@ -14,6 +14,8 @@ import java.time.LocalTime;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"company_id", "timeStampInHours"})})
 public class Slot {
 
+    private static final int MILLIS_TO_HOUR = 3600000;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,11 +30,11 @@ public class Slot {
     private String customerName;
 
     public static int convertToTimeStampInHours(LocalDate date, int hour) {
-        return (int) (Timestamp.valueOf(LocalDateTime.of(date, LocalTime.of(hour, 0))).getTime() / 360000);
+        return (int) (Timestamp.valueOf(LocalDateTime.of(date, LocalTime.of(hour, 0))).getTime() / MILLIS_TO_HOUR);
     }
 
     public static int now() {
-        return (int) (System.currentTimeMillis() / 360000);
+        return (int) (System.currentTimeMillis() / MILLIS_TO_HOUR);
     }
 
     public boolean isBooked() {
@@ -40,7 +42,7 @@ public class Slot {
     }
 
     public boolean isPast() {
-        return timeStampInHours < System.currentTimeMillis() / 360000;
+        return timeStampInHours < System.currentTimeMillis() / MILLIS_TO_HOUR;
     }
 
     public void setTimeStampInHours(LocalDate date, int hour) {
