@@ -19,8 +19,14 @@ public class BookingController {
     private final SlotBookService bookService;
 
     @PutMapping("book/{id}")
-    @Operation(summary = "Book slot")
+    @Operation(summary = "Book slot", description = "Throw error if the slot is already booked or slot is out dated.")
     public Slot book(@PathVariable Long id, @Valid @RequestBody SlotBookRequest request) {
         return bookService.book(id, request);
+    }
+
+    @DeleteMapping("book/{id}")
+    @Operation(summary = "Cancel book", description = "Throw error if the slot is not booked or slot is out dated.")
+    public Slot cancel(@PathVariable Long id) {
+        return bookService.cancel(id);
     }
 }

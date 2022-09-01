@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -29,5 +30,12 @@ public class Slot {
 
     public boolean isBooked() {
         return customerName != null;
+    }
+
+    public boolean isBefore(LocalDateTime other) {
+        if (date.isBefore(other.toLocalDate())) {
+            return true;
+        }
+        return date.isEqual(other.toLocalDate()) && hour < other.toLocalTime().getHour();
     }
 }

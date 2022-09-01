@@ -19,7 +19,7 @@ public abstract class SlotRequest {
     private LocalDate date;
 
     @NotNull
-    @Min(1)
-    @Max(24)
+    @Min(0)
+    @Max(23)
     private Integer hour;
 }
