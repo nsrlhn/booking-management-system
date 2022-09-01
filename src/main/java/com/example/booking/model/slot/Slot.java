@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Data
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 public class Slot {
 
     private static final int MILLIS_TO_HOUR = 3600000;
+    private static final int SECOND_TO_HOUR = 3600;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,5 +58,9 @@ public class Slot {
     public int compareDateAndTime(LocalDate date, Integer hour) {
         int other = convertToTimeStampInHours(date, hour);
         return Integer.compare(timeStampInHours, other);
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return LocalDateTime.ofEpochSecond(((long) timeStampInHours) * SECOND_TO_HOUR, 0, OffsetDateTime.now().getOffset());
     }
 }

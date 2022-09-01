@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,5 +34,11 @@ public class CompanyQueryService {
         }
 
         return slotRepository.existsByCustomerNameIsNullAndCompanyIdAndTimeStampInHours(companyId, Slot.convertToTimeStampInHours(dateTime));
+    }
+
+    public List<Slot> getSlots(Long companyId, Integer withinDays) {
+        int startHour = Slot.now();
+        int endHour = Slot.now() + withinDays * 24;
+        return slotRepository.findByCustomerNameIsNullAndCompanyIdAndTimeStampInHoursBetween(companyId, startHour, endHour);
     }
 }
