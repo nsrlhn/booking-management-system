@@ -11,8 +11,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -31,20 +29,12 @@ public class DataLoader {
         company.setStatus(Status.Active);
         company = companyRepository.save(company);
 
-        for (int i = 0; i < 24; i++) {
-            Slot slot1 = new Slot();
-            slot1.setCompany(company);
-            slot1.setDate(LocalDate.now());
-            slot1.setHour(LocalDateTime.now().getHour() + i);
-            slotRepository.save(slot1);
-        }
-
-        for (int i = 0; i < 24; i++) {
-            Slot slot1 = new Slot();
-            slot1.setCompany(company);
-            slot1.setDate(LocalDate.now().plusDays(1));
-            slot1.setHour(LocalDateTime.now().getHour() + i);
-            slotRepository.save(slot1);
+        int currentHour = Slot.now();
+        for (int i = 0; i < 48; i++) {
+            Slot slot = new Slot();
+            slot.setCompany(company);
+            slot.setTimeStampInHours(currentHour + i);
+            slotRepository.save(slot);
         }
     }
 }

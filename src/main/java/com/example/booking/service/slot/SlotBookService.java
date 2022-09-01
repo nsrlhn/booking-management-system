@@ -9,8 +9,6 @@ import com.example.booking.request.slot.SlotBookRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 @RequiredArgsConstructor
 public class SlotBookService {
@@ -24,7 +22,7 @@ public class SlotBookService {
         if (slot.isBooked()) {
             throw new SlotIsAlreadyBookedException(slot.getId());
         }
-        if (slot.isBefore(LocalDateTime.now())) {
+        if (slot.isPast()) {
             throw new SlotIsPast(slot.getId());
         }
 
@@ -41,7 +39,7 @@ public class SlotBookService {
         if (!slot.isBooked()) {
             throw new SlotIsNotBookedException(slot.getId());
         }
-        if (slot.isBefore(LocalDateTime.now())) {
+        if (slot.isPast()) {
             throw new SlotIsPast(slot.getId());
         }
 

@@ -6,8 +6,6 @@ import com.example.booking.repository.slot.SlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,7 +16,7 @@ public class CompanySearchService {
     private final SlotRepository slotRepository;
 
     public Set<Company> findAllFree() {
-        return slotRepository.findByDateAndHourAndCustomerNameIsNull(LocalDate.now(), LocalDateTime.now().getHour())
+        return slotRepository.findByCustomerNameIsNullAndTimeStampInHours(Slot.now())
                 .stream()
                 .map(Slot::getCompany)
                 .collect(Collectors.toSet());

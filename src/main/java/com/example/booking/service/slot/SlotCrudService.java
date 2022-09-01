@@ -22,21 +22,22 @@ public class SlotCrudService {
 
     public Slot save(SlotSaveRequest request) {
         // Check & Get
+        int timeStampInHours = Slot.convertToTimeStampInHours(request.getDate(), request.getHour());
+
         Company company = companyService.find(request.getCompanyId());
-        this.checkUniqueness(request);
+        this.checkUniqueness(request, timeStampInHours);
 
         // Prepare
         Slot slot = new Slot();
-        slot.setDate(request.getDate());
-        slot.setHour(request.getHour());
+        slot.setTimeStampInHours(timeStampInHours);
         slot.setCompany(company);
 
         // Save
         return repository.save(slot);
     }
 
-    private void checkUniqueness(SlotRequest request) {
-        if (repository.existsByCompanyIdAndDateAndHour(request.getCompanyId(), request.getDate(), request.getHour())) {
+    private void checkUniqueness(SlotRequest request, int timeStampInHours) {
+        if (repository.existsByCompanyIdAndTimeStampInHours(request.getCompanyId(), timeStampInHours)) {
             throw new SlotIsAlreadyAvailableException(request.getCompanyId(), request.getDate(), request.getHour());
         }
     }
@@ -47,24 +48,24 @@ public class SlotCrudService {
 
     public Slot update(Long id, SlotUpdateRequest request) {
         // Check & Get
+        int timeStampInHours = Slot.convertToTimeStampInHours(request.getDate(), request.getHour());
+
         Slot slot = this.find(id);
 
         boolean isCompanyChanged = !request.getCompanyId().equals(slot.getCompany().getId());
-        boolean isHourChanged = !request.getHour().equals(slot.getHour());
-        boolean isDateChanged = !request.getDate().equals(slot.getDate());
+        boolean isDateOrTimeChanged = !slot.getTimeStampInHours().equals(timeStampInHours);
 
         if (slot.isBooked()) {
             throw new SlotIsAlreadyBookedException(slot.getId());
         }
-        if (isCompanyChanged || isDateChanged || isHourChanged) {
-            this.checkUniqueness(request);
+        if (isCompanyChanged || isDateOrTimeChanged) {
+            this.checkUniqueness(request, timeStampInHours);
         }
 
         Company company = isCompanyChanged ? companyService.find(request.getCompanyId()) : slot.getCompany();
 
         // Prepare
-        slot.setDate(request.getDate());
-        slot.setHour(request.getHour());
+        slot.setTimeStampInHours(timeStampInHours);
         slot.setCompany(company);
 
         // Save
