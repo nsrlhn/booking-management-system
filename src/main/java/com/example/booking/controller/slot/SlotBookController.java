@@ -13,8 +13,8 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = {"slot"})
-@Tag(name = "booking")
-public class BookingController {
+@Tag(name = "slot-book")
+public class SlotBookController {
 
     private final SlotBookService bookService;
 

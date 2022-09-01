@@ -14,8 +14,8 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = {"company"})
-@Tag(name = "company")
-public class CompanyController {
+@Tag(name = "company-crud")
+public class CompanyCrudController {
 
     private final CompanyCrudService service;
 

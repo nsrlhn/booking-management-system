@@ -14,8 +14,8 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = {"slot"})
-@Tag(name = "slot")
-public class SlotController {
+@Tag(name = "slot-crud")
+public class SlotCrudController {
 
     private final SlotCrudService crudService;
 

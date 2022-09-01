@@ -9,6 +9,15 @@ spring:
       ddl-auto: create-drop
     show-sql: true
 
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
 springdoc:
   api-docs:
     path: /api-docs
