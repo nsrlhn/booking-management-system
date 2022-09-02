@@ -22,10 +22,10 @@ public class DataLoader {
     @EventListener(ApplicationReadyEvent.class)
     public void load() {
         Company company = new Company();
-        company.setName("Test Company");
+        company.setName("Company in Istanbul");
         company.setPhone("5531312403");
-        company.setLongitude(new BigDecimal("28.979530"));
         company.setLatitude(new BigDecimal("41.015137"));
+        company.setLongitude(new BigDecimal("28.979530"));
         company.setStatus(Status.Active);
         company = companyRepository.save(company);
 
@@ -36,5 +36,13 @@ public class DataLoader {
             slot.setTimeStampInHours(currentHour + i);
             slotRepository.save(slot);
         }
+
+        Company company2 = new Company();
+        company2.setName("Company in Ankara");
+        company2.setPhone("5531312403");
+        company2.setLatitude(new BigDecimal("39.925533"));
+        company2.setLongitude(new BigDecimal("32.866287"));
+        company2.setStatus(Status.Active);
+        companyRepository.save(company2);
     }
 }

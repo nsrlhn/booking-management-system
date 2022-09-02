@@ -21,11 +21,11 @@ public class Company {
     @Column(nullable = false, length = 10)
     private String phone;
 
-    @Column(nullable = false, precision = 9, scale = 6)
-    private BigDecimal longitude;
-
     @Column(nullable = false, precision = 8, scale = 6)
     private BigDecimal latitude;
+
+    @Column(nullable = false, precision = 9, scale = 6)
+    private BigDecimal longitude;
 
     @Column(nullable = false)
     private Status status;

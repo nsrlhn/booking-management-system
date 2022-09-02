@@ -8,6 +8,7 @@ import com.example.booking.repository.slot.SlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class CompanyQueryService {
 
     private final SlotRepository slotRepository;
-    private final CompanyRepository repository;
+    private final CompanyRepository companyRepository;
 
     public Set<Company> findAllFree() {
         return slotRepository.findByCustomerNameIsNullAndTimeStampInHours(Slot.now())
@@ -29,7 +30,7 @@ public class CompanyQueryService {
 
     public boolean isCompanyAvailable(Long companyId, LocalDateTime dateTime) {
         // Check
-        if (!repository.existsById(companyId)) {
+        if (!companyRepository.existsById(companyId)) {
             throw new CompanyNotFoundException(companyId);
         }
 
@@ -40,5 +41,9 @@ public class CompanyQueryService {
         int startHour = Slot.now();
         int endHour = Slot.now() + withinDays * 24;
         return slotRepository.findByCustomerNameIsNullAndCompanyIdAndTimeStampInHoursBetween(companyId, startHour, endHour);
+    }
+
+    public Company findNearest(BigDecimal latitude, BigDecimal longitude) {
+        return companyRepository.findNearest(latitude, longitude);
     }
 }

@@ -15,7 +15,7 @@ public abstract class CompanyRequest {
     private String name;
 
     @NotNull
-    @Pattern(regexp = "[0-9]{10}")
+    @Pattern(regexp = "\\d{10}")
     @Schema(example = "5531312403")
     private String phone;
 
