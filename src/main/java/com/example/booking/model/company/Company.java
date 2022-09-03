@@ -5,11 +5,12 @@ import com.example.booking.request.company.CompanyRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Data
-public class Company {
+public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +30,6 @@ public class Company {
 
     @Column(nullable = false)
     private Status status;
-
-    public static Company of(Long id) {
-        Company company = new Company();
-        company.setId(id);
-        return company;
-    }
 
     public <T extends CompanyRequest> void setFields(T request) {
         name = request.getName();

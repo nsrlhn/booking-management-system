@@ -4,6 +4,7 @@ import com.example.booking.model.company.Company;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.time.OffsetDateTime;
 @Entity
 @Data
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"company_id", "timeStampInHours"})})
-public class Slot {
+public class Slot implements Serializable {
 
     private static final int MILLIS_TO_HOUR = 3600000;
     private static final int SECOND_TO_HOUR = 3600;
@@ -49,15 +50,6 @@ public class Slot {
 
     public boolean isPast() {
         return timeStampInHours < System.currentTimeMillis() / MILLIS_TO_HOUR;
-    }
-
-    public void setTimeStampInHours(LocalDate date, int hour) {
-        timeStampInHours = convertToTimeStampInHours(date, hour);
-    }
-
-    public int compareDateAndTime(LocalDate date, Integer hour) {
-        int other = convertToTimeStampInHours(date, hour);
-        return Integer.compare(timeStampInHours, other);
     }
 
     public LocalDateTime getLocalDateTime() {

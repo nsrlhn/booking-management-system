@@ -4,11 +4,14 @@ import com.example.booking.enums.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
-public abstract class CompanyRequest {
+public abstract class CompanyRequest implements Serializable {
 
     @NotNull
     @Schema(example = "Company Test Name")
@@ -32,6 +35,10 @@ public abstract class CompanyRequest {
     @Min(-90)
     @Schema(example = "40.990334")
     private BigDecimal latitude;
+
+    @NotNull
+    @Valid
+    private List<WorkingHourRequest> workingHours;
 
     public abstract Status getStatus();
 }

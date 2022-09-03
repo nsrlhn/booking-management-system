@@ -7,26 +7,35 @@ import com.example.booking.request.company.CompanySaveRequest;
 import com.example.booking.request.company.CompanyUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class CompanyCrudService {
 
     private final CompanyRepository repository;
+    private final WorkingHourCrudService workingHourService;
 
+    @Transactional
     public Company save(CompanySaveRequest request) {
         // Prepare
         Company company = new Company();
         company.setFields(request);
 
         // Save
-        return repository.save(company);
+        company = repository.save(company);
+
+        // Save: Working Hours
+        workingHourService.saveAll(company, request.getWorkingHours());
+
+        return company;
     }
 
     public Company find(Long id) {
         return repository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
+    @Transactional
     public Company update(Long id, CompanyUpdateRequest request) {
         // Check & Get
         Company company = this.find(id);
@@ -34,7 +43,12 @@ public class CompanyCrudService {
         // Prepare
         company.setFields(request);
 
-        // Save
-        return repository.save(company);
+        // Update
+        final Company result = repository.save(company);
+
+        // Update: Working Hours
+        workingHourService.updateOrSaveAll(company, request.getWorkingHours());
+
+        return result;
     }
 }

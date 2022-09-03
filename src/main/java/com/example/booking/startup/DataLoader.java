@@ -2,8 +2,11 @@ package com.example.booking.startup;
 
 import com.example.booking.enums.Status;
 import com.example.booking.model.company.Company;
+import com.example.booking.model.company.WorkingHour;
+import com.example.booking.model.company.WorkingHourId;
 import com.example.booking.model.slot.Slot;
 import com.example.booking.repository.company.CompanyRepository;
+import com.example.booking.repository.company.WorkingHourRepository;
 import com.example.booking.repository.slot.SlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -11,12 +14,15 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Component
 @RequiredArgsConstructor
 public class DataLoader {
 
     private final CompanyRepository companyRepository;
+    private final WorkingHourRepository workingHourRepository;
     private final SlotRepository slotRepository;
 
     @EventListener(ApplicationReadyEvent.class)
@@ -28,6 +34,14 @@ public class DataLoader {
         company.setLongitude(new BigDecimal("28.979530"));
         company.setStatus(Status.Active);
         company = companyRepository.save(company);
+
+        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+            WorkingHour wh = new WorkingHour();
+            wh.setId(new WorkingHourId(company, dayOfWeek));
+            wh.setStart(LocalTime.of(9, 0));
+            wh.setEnd(LocalTime.of(18, 0));
+            workingHourRepository.save(wh);
+        }
 
         int currentHour = Slot.now();
         for (int i = 0; i < 48; i++) {

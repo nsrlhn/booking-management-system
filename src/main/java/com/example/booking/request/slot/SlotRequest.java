@@ -6,10 +6,11 @@ import lombok.Data;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
-public abstract class SlotRequest {
+public abstract class SlotRequest implements Serializable {
 
     @NotNull
     @Schema(example = "1")
