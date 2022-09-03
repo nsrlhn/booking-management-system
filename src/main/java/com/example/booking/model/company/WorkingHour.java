@@ -1,6 +1,7 @@
 package com.example.booking.model.company;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -9,7 +10,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "company_working_hours")
 public class WorkingHour implements Serializable {

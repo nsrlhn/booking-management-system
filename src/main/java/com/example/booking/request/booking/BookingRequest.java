@@ -1,4 +1,4 @@
-package com.example.booking.request.slot;
+package com.example.booking.request.booking;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
-public abstract class SlotRequest implements Serializable {
+public class BookingRequest implements Serializable {
 
     @NotNull
     @Schema(example = "1")
@@ -22,5 +22,10 @@ public abstract class SlotRequest implements Serializable {
     @NotNull
     @Min(0)
     @Max(23)
+    @Schema(example = "14")
     private Integer hour;
+
+    @NotNull
+    @Schema(example = "Ensar ILHAN")
+    private String customerName;
 }

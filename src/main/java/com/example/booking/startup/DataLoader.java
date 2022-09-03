@@ -4,10 +4,8 @@ import com.example.booking.enums.Status;
 import com.example.booking.model.company.Company;
 import com.example.booking.model.company.WorkingHour;
 import com.example.booking.model.company.WorkingHourId;
-import com.example.booking.model.slot.Slot;
 import com.example.booking.repository.company.CompanyRepository;
 import com.example.booking.repository.company.WorkingHourRepository;
-import com.example.booking.repository.slot.SlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -23,7 +21,6 @@ public class DataLoader {
 
     private final CompanyRepository companyRepository;
     private final WorkingHourRepository workingHourRepository;
-    private final SlotRepository slotRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void load() {
@@ -41,14 +38,6 @@ public class DataLoader {
             wh.setStart(LocalTime.of(9, 0));
             wh.setEnd(LocalTime.of(18, 0));
             workingHourRepository.save(wh);
-        }
-
-        int currentHour = Slot.now();
-        for (int i = 0; i < 48; i++) {
-            Slot slot = new Slot();
-            slot.setCompany(company);
-            slot.setTimeStampInHours(currentHour + i);
-            slotRepository.save(slot);
         }
 
         Company company2 = new Company();

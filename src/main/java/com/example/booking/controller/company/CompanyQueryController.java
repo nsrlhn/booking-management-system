@@ -1,6 +1,5 @@
 package com.example.booking.controller.company;
 
-import com.example.booking.dto.company.SlotDto;
 import com.example.booking.model.company.Company;
 import com.example.booking.service.company.CompanyQueryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,13 +40,10 @@ public class CompanyQueryController {
         return service.isCompanyAvailable(id, dateTime);
     }
 
-    @GetMapping(value = "{id}/getSlots")
+    @GetMapping(value = "{id}/availability")
     @Operation(summary = "Check Time Available by Company for Next x Days")
-    public List<SlotDto> getSlots(@PathVariable Long id, @RequestParam Integer withinDays) {
-        return service.getSlots(id, withinDays)
-                .stream()
-                .map(s -> new SlotDto(s.getLocalDateTime()))
-                .collect(Collectors.toList());
+    public List<Company> getAvailability(@PathVariable Long id, @RequestParam Integer withinDays) {
+        return service.getAvailability(id, withinDays);
     }
 
     @GetMapping(value = "nearest")

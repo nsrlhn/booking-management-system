@@ -15,8 +15,8 @@ public class SwaggerConfig {
 
 
     @Bean
-    GroupedOpenApi slot() {
-        return GroupedOpenApi.builder().group("slot").pathsToMatch("/slot/**").build();
+    GroupedOpenApi booking() {
+        return GroupedOpenApi.builder().group("booking").pathsToMatch("/booking/**").build();
     }
 
     @Bean
