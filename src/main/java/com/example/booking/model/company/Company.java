@@ -2,14 +2,12 @@ package com.example.booking.model.company;
 
 import com.example.booking.enums.Status;
 import com.example.booking.request.company.CompanyRequest;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -34,10 +32,6 @@ public class Company implements Serializable {
 
     @Column(nullable = false)
     private Status status;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "id.company")
-    private Set<WorkingHour> workingHours;
 
     public static Company of(Long id) {
         Company company = new Company();

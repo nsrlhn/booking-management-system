@@ -7,6 +7,6 @@ import java.time.DayOfWeek;
 public class WorkingHourNotFoundException extends CustomException {
 
     public WorkingHourNotFoundException(Long companyId, DayOfWeek dayOfWeek) {
-        super(String.format("Either Company(id=%d) is Not Exist or Not Working in %s", companyId, dayOfWeek));
+        super(String.format("Company(id=%d) is Not Working at %s", companyId, dayOfWeek));
     }
 }
