@@ -39,6 +39,12 @@ public class Company implements Serializable {
     @OneToMany(mappedBy = "id.company")
     private Set<WorkingHour> workingHours;
 
+    public static Company of(Long id) {
+        Company company = new Company();
+        company.setId(id);
+        return company;
+    }
+
     public <T extends CompanyRequest> void setFields(T request) {
         name = request.getName();
         phone = request.getPhone();

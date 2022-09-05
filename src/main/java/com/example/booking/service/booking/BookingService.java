@@ -1,49 +1,34 @@
 package com.example.booking.service.booking;
 
 import com.example.booking.exception.booking.CompanyIsNotAvailable;
-import com.example.booking.exception.booking.CompanyIsNotWorkingAtThatTime;
+import com.example.booking.exception.booking.CompanyIsNotWorking;
+import com.example.booking.exception.company.WorkingHourNotFoundException;
 import com.example.booking.model.booking.Booking;
 import com.example.booking.model.company.Company;
 import com.example.booking.model.company.WorkingHour;
+import com.example.booking.model.company.WorkingHourId;
 import com.example.booking.repository.booking.BookingRepository;
+import com.example.booking.repository.company.WorkingHourRepository;
 import com.example.booking.request.booking.BookingRequest;
-import com.example.booking.service.company.CompanyCrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BookingService {
 
     private final BookingRepository repository;
-    private final CompanyCrudService companyCrudService;
+    private final WorkingHourRepository workingHourRepository;
 
     public Booking reserveOneHour(BookingRequest request) {
-        LocalTime startTime = LocalTime.of(request.getHour(), 0);
-        LocalTime endTime = startTime.plusHours(1);
-        LocalDateTime startDateTime = LocalDateTime.of(request.getDate(), startTime);
-        LocalDateTime endDateTime = LocalDateTime.of(request.getDate(), endTime);
+        LocalDateTime startDateTime = LocalDateTime.of(request.getDate(), LocalTime.of(request.getHour(), 0));
+        LocalDateTime endDateTime = LocalDateTime.of(request.getDate(), LocalTime.of(request.getHour(), 0).plusHours(1));
 
         // Check & Get
-        Company company = companyCrudService.find(request.getCompanyId());
-        Optional<WorkingHour> workingHour = company.getWorkingHours()
-                .stream()
-                .filter(wh -> wh.getId().getDayOfWeek().equals(request.getDate().getDayOfWeek()))
-                .findFirst();
-
-        // Check: If company is working
-        if (workingHour.isEmpty() || workingHour.get().getStart().isAfter(startTime) || workingHour.get().getEnd().isBefore(endTime)) {
-            throw new CompanyIsNotWorkingAtThatTime(request.getCompanyId(), startDateTime);
-        }
-
-        // Check: If company is available
-        if (repository.numberOfOverlap(company.getId(), startDateTime, endDateTime) != 0) {
-            throw new CompanyIsNotAvailable(request.getCompanyId(), startDateTime);
-        }
+        Company company = this.getCompanyIfAvailable(request.getCompanyId(), startDateTime, endDateTime);
 
         // Prepare
         Booking booking = new Booking();
@@ -54,5 +39,23 @@ public class BookingService {
 
         // Save
         return repository.save(booking);
+    }
+
+    public Company getCompanyIfAvailable(Long companyId, LocalDateTime start, LocalDateTime end) {
+        // Get
+        WorkingHour workingHour = workingHourRepository.findById(new WorkingHourId(Company.of(companyId), start.getDayOfWeek()))
+                .orElseThrow(() -> new WorkingHourNotFoundException(companyId, start.getDayOfWeek()));
+
+        // Check: If company is working
+        if (workingHour.getStart().isAfter(start.toLocalTime()) || workingHour.getEnd().isBefore(end.toLocalTime())) {
+            throw new CompanyIsNotWorking(companyId, start);
+        }
+
+        // Check: If company is available
+        if (repository.numberOfOverlap(companyId, start, end) != 0) {
+            throw new CompanyIsNotAvailable(companyId, start);
+        }
+        
+        return workingHour.getId().getCompany();
     }
 }

@@ -15,7 +15,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -30,20 +29,14 @@ public class CompanyQueryController {
     @GetMapping(value = "allFree")
     @Operation(summary = "Find All Free Companies Now")
     public Set<Company> findAllFree() {
-        return service.findAllFree();
+        return service.findAllFreeNow();
     }
 
     @GetMapping(value = "{id}/isAvailable")
     @Operation(summary = "Check If Company Available")
     public boolean checkIfCompanyAvailable(@PathVariable Long id,
                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Schema(example = "2022-09-01T17:30") LocalDateTime dateTime) {
-        return service.isCompanyAvailable(id, dateTime);
-    }
-
-    @GetMapping(value = "{id}/availability")
-    @Operation(summary = "Check Time Available by Company for Next x Days")
-    public List<Company> getAvailability(@PathVariable Long id, @RequestParam Integer withinDays) {
-        return service.getAvailability(id, withinDays);
+        return service.isAvailable(id, dateTime);
     }
 
     @GetMapping(value = "nearest")

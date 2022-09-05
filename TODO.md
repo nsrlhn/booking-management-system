@@ -6,8 +6,10 @@
 ### Company:
 
 - API needed to delete a working hour
-- Working hour service checks
+- Working hour service check requests
+- Launch time should be considered
 
 ### Booking:
 
 - API needed to delete a booking
+- Check if end is in the same day, Duration can be used
