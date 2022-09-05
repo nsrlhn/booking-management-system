@@ -2,10 +2,10 @@ package com.example.booking.startup;
 
 import com.example.booking.enums.Status;
 import com.example.booking.model.company.Company;
-import com.example.booking.model.company.WorkingHour;
-import com.example.booking.model.company.WorkingHourId;
+import com.example.booking.model.workinghour.WorkingHour;
+import com.example.booking.model.workinghour.WorkingHourId;
 import com.example.booking.repository.company.CompanyRepository;
-import com.example.booking.repository.company.WorkingHourRepository;
+import com.example.booking.repository.workinghour.WorkingHourRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;

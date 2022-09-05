@@ -1,5 +1,6 @@
-package com.example.booking.model.company;
+package com.example.booking.model.workinghour;
 
+import com.example.booking.model.company.Company;
 import lombok.Data;
 
 import javax.persistence.Column;

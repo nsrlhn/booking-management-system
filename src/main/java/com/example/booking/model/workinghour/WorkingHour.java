@@ -1,4 +1,4 @@
-package com.example.booking.model.company;
+package com.example.booking.model.workinghour;
 
 import lombok.Getter;
 import lombok.Setter;

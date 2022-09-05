@@ -3,7 +3,8 @@ package com.example.booking.controller.company;
 import com.example.booking.model.company.Company;
 import com.example.booking.request.company.CompanySaveRequest;
 import com.example.booking.request.company.CompanyUpdateRequest;
-import com.example.booking.service.company.CompanyCrudService;
+import com.example.booking.service.company.CompanyCUDService;
+import com.example.booking.service.company.CompanyReadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,13 @@ import javax.validation.Valid;
 @Tag(name = "company-crud")
 public class CompanyCrudController {
 
-    private final CompanyCrudService service;
+    private final CompanyCUDService service;
+    private final CompanyReadService findService;
 
     @GetMapping(value = "{id}")
     @Operation(summary = "Find Company by Id", description = "Throw error if company is not found.")
     public Company find(@PathVariable Long id) {
-        return service.find(id);
+        return findService.find(id);
     }
 
     @PostMapping

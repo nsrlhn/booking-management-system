@@ -1,7 +1,7 @@
-package com.example.booking.repository.company;
+package com.example.booking.repository.workinghour;
 
-import com.example.booking.model.company.WorkingHour;
-import com.example.booking.model.company.WorkingHourId;
+import com.example.booking.model.workinghour.WorkingHour;
+import com.example.booking.model.workinghour.WorkingHourId;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

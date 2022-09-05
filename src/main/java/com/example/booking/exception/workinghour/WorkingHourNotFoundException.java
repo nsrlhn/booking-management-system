@@ -1,4 +1,4 @@
-package com.example.booking.exception.company;
+package com.example.booking.exception.workinghour;
 
 import com.example.booking.exception.CustomException;
 

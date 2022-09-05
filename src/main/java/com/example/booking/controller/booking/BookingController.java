@@ -2,7 +2,7 @@ package com.example.booking.controller.booking;
 
 import com.example.booking.model.booking.Booking;
 import com.example.booking.request.booking.BookingRequest;
-import com.example.booking.service.booking.BookingService;
+import com.example.booking.service.booking.BookingCUDService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +19,11 @@ import javax.validation.Valid;
 @Tag(name = "booking")
 public class BookingController {
 
-    private final BookingService bookingService;
+    private final BookingCUDService bookingCUDService;
 
     @PutMapping("reserveAnHour")
     @Operation(summary = "Reserve an hour")
     public Booking reserveOneHour(@Valid @RequestBody BookingRequest request) {
-        return bookingService.reserveOneHour(request);
+        return bookingCUDService.reserveOneHour(request);
     }
 }
